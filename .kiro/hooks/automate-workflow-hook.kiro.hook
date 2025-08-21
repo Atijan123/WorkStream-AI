@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "automate_workflow",
+  "description": "Processes natural language workflow descriptions and generates workflow specifications",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "frontend/src/components/WorkflowBuilder.tsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Analyze the WorkflowBuilder.tsx file to check if a new workflow request was submitted. If a new workflow request is detected, process the natural language workflow description and generate the corresponding workflow specification. Focus on extracting workflow steps, conditions, and automation rules from the user input."
+  }
+}

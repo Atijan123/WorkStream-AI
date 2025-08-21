@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "evolve_ui",
+  "description": "Processes natural language UI feature requests and generates React components",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "frontend/src/components/FeatureRequest.tsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A new UI feature request has been submitted in the FeatureRequest.tsx file. Please analyze the feature request content and generate the appropriate React component(s) to implement the requested functionality. Check if this is a new feature request that needs to be processed and create the necessary component files in the frontend/src/components directory."
+  }
+}

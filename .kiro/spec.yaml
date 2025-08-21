@@ -1,0 +1,56 @@
+app_name: Self-Evolving Workflow Automator
+description: >
+  A dashboard that can evolve its own UI features and automate workflows
+  based on natural-language requests. Integrates a universal workflow
+  automator with a self-evolving spec-to-code pipeline powered by Kiro.
+
+tech_stack:
+  frontend: react
+  backend: node
+  database: sqlite
+  styles: tailwindcss
+
+features:
+  - feature_request_box: >
+      A text box where users submit natural-language requests for new UI
+      features. Requests trigger the `evolve_ui` hook to update the spec
+      and regenerate UI components.
+  - workflow_builder: >
+      A natural-language workflow request interface that triggers the
+      `automate_workflow` hook to append structured workflows to the spec
+      and generate backend automation code.
+  - dashboard_home: >
+      Central view showing widgets, active workflows, and logs of recent
+      self-evolution changes.
+
+workflows:
+  - id: daily_sales_report
+    name: "Daily Sales Report Email"
+    description: >
+      Sends a daily sales report email to the sales@company.com mailbox
+      at 8 AM every day.
+    trigger:
+      type: cron
+      schedule: "0 8 * * *"
+    actions:
+      - type: fetch_data
+        source: sales_db
+        query: "SELECT * FROM sales WHERE date = CURRENT_DATE"
+      - type: generate_report
+        format: pdf
+      - type: send_email
+        to: sales@company.com
+        subject: "Daily Sales Report"
+        attachment: report.pdf
+
+  - id: hourly_system_health
+    name: "Hourly System Health Check"
+    description: >
+      Checks system CPU and memory usage every hour and logs results.
+    trigger:
+      type: cron
+      schedule: "0 * * * *"
+    actions:
+      - type: check_system_metrics
+      - type: log_result
+        destination: system_health_log

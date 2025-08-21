@@ -1,0 +1,44 @@
+{
+  "name": "self-evolving-workflow-automator-backend",
+  "version": "1.0.0",
+  "description": "Backend for Self-Evolving Workflow Automator",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "jest",
+    "db:init": "tsx src/scripts/initializeDatabase.ts",
+    "db:migrate": "tsx src/scripts/migrate.ts",
+    "db:migrate:up": "tsx src/scripts/migrate.ts up",
+    "db:migrate:down": "tsx src/scripts/migrate.ts down",
+    "db:migrate:status": "tsx src/scripts/migrate.ts status",
+    "lint": "echo 'Linting not configured yet'",
+    "prestart": "npm run build"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "js-yaml": "^4.1.0",
+    "node-cron": "^3.0.3",
+    "socket.io": "^4.8.1",
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.8",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.9.0",
+    "@types/node-cron": "^3.0.11",
+    "@types/socket.io": "^3.0.1",
+    "@types/supertest": "^6.0.3",
+    "@types/uuid": "^9.0.8",
+    "jest": "^29.7.0",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.1.1",
+    "tsx": "^4.1.4",
+    "typescript": "^5.2.2"
+  }
+}

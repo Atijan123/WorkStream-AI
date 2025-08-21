@@ -1,0 +1,62 @@
+2025-08-15T00:36:20.103Z INFO  [AlertingService] Alert rule added: High CPU Usage | {"ruleId":"high_cpu_usage","type":"system","severity":"high"}
+2025-08-15T00:36:20.105Z INFO  [AlertingService] Alert rule added: High Memory Usage | {"ruleId":"high_memory_usage","type":"system","severity":"high"}
+2025-08-15T00:36:20.105Z INFO  [AlertingService] Alert rule added: Critical CPU Usage | {"ruleId":"critical_cpu_usage","type":"system","severity":"critical"}
+2025-08-15T00:36:20.105Z INFO  [AlertingService] Alert rule added: Critical Memory Usage | {"ruleId":"critical_memory_usage","type":"system","severity":"critical"}
+2025-08-15T00:36:20.105Z INFO  [AlertingService] Alert rule added: Workflow Execution Failed | {"ruleId":"workflow_failure","type":"workflow","severity":"medium"}
+2025-08-15T00:36:20.106Z INFO  [AlertingService] Alert rule added: Workflow Execution Timeout | {"ruleId":"workflow_timeout","type":"workflow","severity":"medium"}
+2025-08-15T00:36:20.106Z INFO  [AlertingService] Alert rule added: Feature Request Processing Failed | {"ruleId":"feature_request_failure","type":"feature","severity":"low"}
+2025-08-15T00:36:20.106Z INFO  [AlertingService] Alert rule added: High Error Rate | {"ruleId":"high_error_rate","type":"error","severity":"high"}
+2025-08-15T00:36:20.139Z INFO  {req:req_1755218180110_jsquvhhyv} Completed database_initialization in 29ms | {"duration":29,"success":true}
+2025-08-15T00:36:20.141Z INFO   Database initialized successfully
+2025-08-15T00:36:20.142Z INFO  [SystemMonitoringService] Starting system monitoring with 30000ms interval | {"intervalMs":30000}
+2025-08-15T00:36:20.144Z INFO   System monitoring started
+2025-08-15T00:36:20.147Z INFO  [SystemMonitoringService]{req:req_1755218180143_ruo94hlea} Completed collect_system_metrics in 4ms | {"duration":4,"success":true}
+2025-08-15T00:36:20.149Z INFO  [Server] Server running on port 3001 | {"port":3001,"environment":"development"}
+2025-08-15T00:36:20.152Z INFO   WebSocket server ready for connections
+2025-08-15T00:36:20.174Z INFO  [SystemMonitoringService]{req:req_1755218180147_i5twa59r1} Completed store_system_metrics in 27ms | {"duration":27,"success":true}
+2025-08-15T00:36:20.176Z WARN  [AlertingService] Alert triggered: High Memory Usage | {"alertId":"alert_1755218180175_pzkrcx51e","type":"system","severity":"high","message":"Memory usage is 89.6% (threshold: 85%)"}
+2025-08-15T00:36:50.152Z INFO  [SystemMonitoringService]{req:req_1755218210151_tb5kj5k3n} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:36:50.170Z INFO  [SystemMonitoringService]{req:req_1755218210152_1j0iw5qt1} Completed store_system_metrics in 18ms | {"duration":18,"success":true}
+2025-08-15T00:37:20.164Z INFO  [SystemMonitoringService]{req:req_1755218240163_7w9m3jbr3} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:37:20.174Z INFO  [SystemMonitoringService]{req:req_1755218240165_d1yj1e5du} Completed store_system_metrics in 9ms | {"duration":9,"success":true}
+2025-08-15T00:37:50.175Z INFO  [SystemMonitoringService]{req:req_1755218270173_645jv8pch} Completed collect_system_metrics in 2ms | {"duration":2,"success":true}
+2025-08-15T00:37:50.187Z INFO  [SystemMonitoringService]{req:req_1755218270176_eby0l2wbu} Completed store_system_metrics in 11ms | {"duration":11,"success":true}
+2025-08-15T00:38:20.188Z INFO  [SystemMonitoringService]{req:req_1755218300188_mp66o59q0} Completed collect_system_metrics in 0ms | {"duration":0,"success":true}
+2025-08-15T00:38:20.198Z INFO  [SystemMonitoringService]{req:req_1755218300189_8b6yxtljm} Completed store_system_metrics in 9ms | {"duration":9,"success":true}
+2025-08-15T00:38:50.193Z INFO  [SystemMonitoringService]{req:req_1755218330191_pl1ijtjl0} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:38:50.205Z INFO  [SystemMonitoringService]{req:req_1755218330194_0jtg2u0uw} Completed store_system_metrics in 11ms | {"duration":11,"success":true}
+2025-08-15T00:39:20.195Z INFO  [SystemMonitoringService]{req:req_1755218360193_cz5e11lyi} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:39:20.216Z INFO  [SystemMonitoringService]{req:req_1755218360195_e1p4u99os} Completed store_system_metrics in 21ms | {"duration":21,"success":true}
+2025-08-15T00:39:50.195Z INFO  [SystemMonitoringService]{req:req_1755218390193_abe05v14c} Completed collect_system_metrics in 2ms | {"duration":2,"success":true}
+2025-08-15T00:39:50.215Z INFO  [SystemMonitoringService]{req:req_1755218390195_ktoy72s7e} Completed store_system_metrics in 20ms | {"duration":20,"success":true}
+2025-08-15T00:40:20.194Z INFO  [SystemMonitoringService]{req:req_1755218420192_52jnml55e} Completed collect_system_metrics in 2ms | {"duration":2,"success":true}
+2025-08-15T00:40:20.216Z INFO  [SystemMonitoringService]{req:req_1755218420195_zqbyq9g3x} Completed store_system_metrics in 21ms | {"duration":21,"success":true}
+2025-08-15T00:40:50.194Z INFO  [SystemMonitoringService]{req:req_1755218450193_8t49iplri} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:40:50.213Z INFO  [SystemMonitoringService]{req:req_1755218450195_tel5zcht3} Completed store_system_metrics in 18ms | {"duration":18,"success":true}
+2025-08-15T00:41:20.202Z INFO  [SystemMonitoringService]{req:req_1755218480194_pfyvd9v3m} Completed collect_system_metrics in 8ms | {"duration":8,"success":true}
+2025-08-15T00:41:20.216Z INFO  [SystemMonitoringService]{req:req_1755218480203_4cl66oclo} Completed store_system_metrics in 13ms | {"duration":13,"success":true}
+2025-08-15T00:41:50.195Z INFO  [SystemMonitoringService]{req:req_1755218510194_o3k9cbhhc} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:41:50.205Z INFO  [SystemMonitoringService]{req:req_1755218510196_s5tsfsqpc} Completed store_system_metrics in 9ms | {"duration":9,"success":true}
+2025-08-15T00:42:20.212Z INFO  [SystemMonitoringService]{req:req_1755218540211_nj2o58wge} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:42:20.221Z INFO  [SystemMonitoringService]{req:req_1755218540213_fhsm58nm3} Completed store_system_metrics in 8ms | {"duration":8,"success":true}
+2025-08-15T00:42:50.213Z INFO  [SystemMonitoringService]{req:req_1755218570212_zvxtwo1a3} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:42:50.238Z INFO  [SystemMonitoringService]{req:req_1755218570214_73jm2bx05} Completed store_system_metrics in 24ms | {"duration":24,"success":true}
+2025-08-15T00:43:20.213Z INFO  [SystemMonitoringService]{req:req_1755218600212_wbmnqph25} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:43:20.224Z INFO  [SystemMonitoringService]{req:req_1755218600214_m0vs1d97i} Completed store_system_metrics in 10ms | {"duration":10,"success":true}
+2025-08-15T00:43:50.215Z INFO  [SystemMonitoringService]{req:req_1755218630214_dvx868c8q} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:43:50.237Z INFO  [SystemMonitoringService]{req:req_1755218630216_088uuq2m7} Completed store_system_metrics in 21ms | {"duration":21,"success":true}
+2025-08-15T00:44:20.215Z INFO  [SystemMonitoringService]{req:req_1755218660214_xx7oe9sug} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:44:20.237Z INFO  [SystemMonitoringService]{req:req_1755218660216_eg5onad2w} Completed store_system_metrics in 21ms | {"duration":21,"success":true}
+2025-08-15T00:44:50.231Z INFO  [SystemMonitoringService]{req:req_1755218690229_ugy53orti} Completed collect_system_metrics in 2ms | {"duration":2,"success":true}
+2025-08-15T00:44:50.244Z INFO  [SystemMonitoringService]{req:req_1755218690232_0tvb7hzj2} Completed store_system_metrics in 12ms | {"duration":12,"success":true}
+2025-08-15T00:45:20.231Z INFO  [SystemMonitoringService]{req:req_1755218720230_j8eed8c0q} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:45:20.252Z INFO  [SystemMonitoringService]{req:req_1755218720232_pqf6f8xiu} Completed store_system_metrics in 20ms | {"duration":20,"success":true}
+2025-08-15T00:45:50.245Z INFO  [SystemMonitoringService]{req:req_1755218750245_2nhn7rkpc} Completed collect_system_metrics in 0ms | {"duration":0,"success":true}
+2025-08-15T00:45:50.260Z INFO  [SystemMonitoringService]{req:req_1755218750246_b533gnd87} Completed store_system_metrics in 14ms | {"duration":14,"success":true}
+2025-08-15T00:46:20.256Z INFO  [SystemMonitoringService]{req:req_1755218780255_2zlaxczul} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:46:20.268Z INFO  [SystemMonitoringService]{req:req_1755218780257_j67k9hz8d} Completed store_system_metrics in 11ms | {"duration":11,"success":true}
+2025-08-15T00:46:20.269Z WARN  [AlertingService] Alert triggered: High Memory Usage | {"alertId":"alert_1755218780269_br10wwqm4","type":"system","severity":"high","message":"Memory usage is 85.2% (threshold: 85%)"}
+2025-08-15T00:46:50.257Z INFO  [SystemMonitoringService]{req:req_1755218810256_e90x93y4j} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:46:50.269Z INFO  [SystemMonitoringService]{req:req_1755218810258_1lu1dwrul} Completed store_system_metrics in 11ms | {"duration":11,"success":true}
+2025-08-15T00:47:20.266Z INFO  [SystemMonitoringService]{req:req_1755218840265_z3fiier7p} Completed collect_system_metrics in 1ms | {"duration":1,"success":true}
+2025-08-15T00:47:20.277Z INFO  [SystemMonitoringService]{req:req_1755218840267_tob1lmska} Completed store_system_metrics in 10ms | {"duration":10,"success":true}
