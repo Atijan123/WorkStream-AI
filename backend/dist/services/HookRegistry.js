@@ -19,7 +19,8 @@ class HookRegistry {
     registerDefaultHooks() {
         const specManager = new SpecManager_1.SpecManager();
         const componentGenerator = new ComponentGenerator_1.ComponentGenerator();
-        const evolveUIHook = new evolve_ui_1.EvolveUIHook(specManager, componentGenerator, this.featureRequestRepo);
+        const evolveUIHook = new evolve_ui_1.EvolveUIHook(specManager, componentGenerator, this.featureRequestRepo, true // Enable fast mode for quick processing
+        );
         this.registerHook(evolveUIHook);
         // Register AutomateWorkflow hook if dependencies are available
         if (this.workflowService) {

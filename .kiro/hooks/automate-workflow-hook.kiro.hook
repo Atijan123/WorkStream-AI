@@ -4,7 +4,7 @@
   "description": "Processes natural language workflow descriptions and generates workflow specifications",
   "version": "1",
   "when": {
-    "type": "fileEdited",
+    "type": "fileCreated",
     "patterns": [
       "frontend/src/components/WorkflowBuilder.tsx"
     ]

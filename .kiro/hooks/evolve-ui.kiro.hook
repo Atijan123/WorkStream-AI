@@ -4,7 +4,7 @@
   "description": "Processes natural language UI feature requests and generates React components",
   "version": "1",
   "when": {
-    "type": "fileEdited",
+    "type": "fileCreated",
     "patterns": [
       "frontend/src/components/FeatureRequest.tsx"
     ]

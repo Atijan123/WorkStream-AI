@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { DashboardData, Workflow, WorkflowStatus } from '../types';
+import { DashboardData, Workflow, WorkflowStatus, GeneratedFeature } from '../types';
 import { apiService } from '../services/api';
 import { useWebSocket } from '../hooks/useWebSocket';
 import { useToast } from '../contexts/ToastContext';
@@ -11,12 +11,106 @@ import WorkflowTimeline from './generated/WorkflowTimeline';
 import RealTimeActivityFeed from './generated/RealTimeActivityFeed';
 import FeatureRequestAnalytics from './generated/FeatureRequestAnalytics';
 import WorkflowExecutionTimeline from './generated/WorkflowExecutionTimeline';
+import WeatherWidgetShowingWidget from './generated/WeatherWidgetShowingWidget';
+import DarkModeToggleWidget from './generated/DarkModeToggleWidget';
+import MetricsOverviewCard from './generated/MetricsOverviewCard';
+import WorkflowStatusDashboard from './generated/WorkflowStatusDashboard';
+import AlertManagementPanel from './generated/AlertManagementPanel';
+import ResourceUsageMonitor from './generated/ResourceUsageMonitor';
+import QuickStatsOverview from './generated/QuickStatsOverview';
+import DarkModeToggle from './generated/DarkModeToggle';
+import LiveSystemStatus from './generated/LiveSystemStatus';
+import QuickActionsPanel from './generated/QuickActionsPanel';
+import NotesWidgetDashboardWidget from './generated/NotesWidgetDashboardWidget';
+import SmallMonthlyCalendarWidget from './generated/SmallMonthlyCalendarWidget';
+import DashboardCalendar from './generated/DashboardCalendar';
 
 interface DashboardHomeProps {
   widgets?: React.ReactNode[];
   activeWorkflows?: WorkflowStatus[];
   recentChanges?: any[];
 }
+
+// Dynamic component loader for generated features
+const DynamicFeatureComponent: React.FC<{ feature: GeneratedFeature }> = ({ feature }) => {
+  const [Component, setComponent] = useState<React.ComponentType<any> | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadComponent = async () => {
+      try {
+        setIsLoading(true);
+        setLoadError(null);
+        
+        // Dynamic import of the component
+        const module = await import(`./generated/${feature.componentName}`);
+        const ComponentToLoad = module.default || module[feature.componentName];
+        
+        if (!ComponentToLoad) {
+          throw new Error(`Component ${feature.componentName} not found in module`);
+        }
+        
+        setComponent(() => ComponentToLoad);
+      } catch (error) {
+        console.error(`Failed to load component ${feature.componentName}:`, error);
+        setLoadError(error instanceof Error ? error.message : 'Unknown error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadComponent();
+  }, [feature.componentName]);
+
+  if (isLoading) {
+    return (
+      <div className="p-4 border border-gray-200 rounded-lg bg-gray-50">
+        <div className="flex items-center justify-center h-32">
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+          <span className="ml-2 text-sm text-gray-600">Loading {feature.name}...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (loadError || !Component) {
+    return (
+      <div className="p-4 border border-red-200 rounded-lg bg-red-50">
+        <div className="flex items-center">
+          <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+          </svg>
+          <div className="ml-3">
+            <h3 className="text-sm font-medium text-red-800">Failed to load {feature.name}</h3>
+            <p className="mt-1 text-sm text-red-700">{loadError}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  try {
+    return <Component />;
+  } catch (renderError) {
+    console.error(`Error rendering component ${feature.componentName}:`, renderError);
+    return (
+      <div className="p-4 border border-red-200 rounded-lg bg-red-50">
+        <div className="flex items-center">
+          <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+          </svg>
+          <div className="ml-3">
+            <h3 className="text-sm font-medium text-red-800">Render error in {feature.name}</h3>
+            <p className="mt-1 text-sm text-red-700">
+              {renderError instanceof Error ? renderError.message : 'Unknown render error'}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+};
 
 const DashboardHome: React.FC<DashboardHomeProps> = ({
   widgets = [],
@@ -189,10 +283,15 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({
 
   return (
     <div className="space-y-6">
+      {/* Calendar at the top of the dashboard */}
+      <DashboardCalendar className="mb-6" />
+
       {/* Header with last updated info and connection status */}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-900">Dashboard</h2>
         <div className="flex items-center space-x-4">
+          {/* Dark Mode Toggle */}
+          <DarkModeToggle />
           {/* Connection Status */}
           <div className="flex items-center space-x-2">
             <div className={`w-2 h-2 rounded-full ${
@@ -246,6 +345,74 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({
         </div>
       )}
 
+      {/* Dynamic Feature Components Section */}
+      {dashboardData?.features && (
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-medium text-gray-900">Generated Features</h3>
+            <div className="flex items-center space-x-4">
+              <span className="text-sm text-gray-500">
+                {dashboardData.features.filter(f => f.status === 'active').length} active
+              </span>
+              {dashboardData.features.filter(f => f.status === 'error').length > 0 && (
+                <span className="text-sm text-red-500">
+                  {dashboardData.features.filter(f => f.status === 'error').length} errors
+                </span>
+              )}
+            </div>
+          </div>
+          
+          {dashboardData.features.filter(f => f.status === 'active').length === 0 ? (
+            <div className="text-center py-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+              <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+              <h3 className="mt-2 text-sm font-medium text-gray-900">No active features</h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Submit a feature request to generate new components that will appear here automatically.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+              {dashboardData.features
+                .filter(feature => feature.status === 'active')
+                .map((feature) => (
+                  <div key={feature.id} className="relative">
+                    <div className="absolute top-2 right-2 z-10">
+                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        {feature.name}
+                      </span>
+                    </div>
+                    <DynamicFeatureComponent feature={feature} />
+                  </div>
+                ))}
+            </div>
+          )}
+
+          {/* Show error features in a separate section */}
+          {dashboardData.features.filter(f => f.status === 'error').length > 0 && (
+            <div className="mt-6">
+              <h4 className="text-sm font-medium text-red-800 mb-2">Components with Errors</h4>
+              <div className="space-y-2">
+                {dashboardData.features
+                  .filter(feature => feature.status === 'error')
+                  .map((feature) => (
+                    <div key={feature.id} className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                      <div className="flex items-center">
+                        <svg className="h-4 w-4 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                        <span className="ml-2 text-sm font-medium text-red-800">{feature.name}</span>
+                      </div>
+                      <p className="mt-1 text-sm text-red-700">{feature.description}</p>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Generated Components Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         <SalesOverview />
@@ -256,7 +423,18 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({
           <FeatureRequestAnalytics stats={dashboardData.featureRequestStats} />
         )}
         <WorkflowExecutionTimeline />
+        <MetricsOverviewCard />
+        <ResourceUsageMonitor />
+        <QuickStatsOverview />
+        <LiveSystemStatus />
+        <QuickActionsPanel />
       </div>
+
+      {/* Workflow Status Dashboard - Full Width */}
+      <WorkflowStatusDashboard />
+
+      {/* Alert Management Panel - Full Width */}
+      <AlertManagementPanel />
 
       {/* Widgets Section */}
       {widgets.length > 0 && (
@@ -269,6 +447,14 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({
               </div>
             ))}
           </div>
+          <WeatherWidgetShowingWidget  />
+        
+          <DarkModeToggleWidget  />
+        
+          <NotesWidgetDashboardWidget  />
+        
+          <SmallMonthlyCalendarWidget  />
+        
         </div>
       )}
 

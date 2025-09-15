@@ -165,7 +165,8 @@ describe('Critical User Journeys', () => {
           completed: 2,
           failed: 1
         },
-        recentFeatureRequests: []
+        recentFeatureRequests: [],
+        features: []
       };
 
       const mockWorkflows = [
@@ -209,8 +210,9 @@ describe('Critical User Journeys', () => {
         new Promise(resolve => setTimeout(() => resolve({
           systemMetrics: { latest: null, averageLast24Hours: null, recentHistory: [] },
           featureRequestStats: { total: 0, pending: 0, processing: 0, completed: 0, failed: 0 },
-          recentFeatureRequests: []
-        }), 100))
+          recentFeatureRequests: [],
+        features: []
+      }), 100))
       );
       mockApiService.getWorkflows.mockResolvedValue([]);
 
@@ -250,7 +252,8 @@ describe('Critical User Journeys', () => {
       mockApiService.getDashboardData.mockResolvedValue({
         systemMetrics: { latest: null, averageLast24Hours: null, recentHistory: [] },
         featureRequestStats: { total: 0, pending: 0, processing: 0, completed: 0, failed: 0 },
-        recentFeatureRequests: []
+        recentFeatureRequests: [],
+        features: []
       });
       mockApiService.getWorkflows.mockResolvedValue([]);
       mockApiService.getFeatureRequests.mockResolvedValue([]);
@@ -323,7 +326,8 @@ describe('Critical User Journeys', () => {
           completed: 2,
           failed: 1
         },
-        recentFeatureRequests: []
+        recentFeatureRequests: [],
+        features: []
       };
 
       mockApiService.getDashboardData.mockResolvedValue(mockDashboardData);
@@ -365,7 +369,8 @@ describe('Critical User Journeys', () => {
           completed: 0,
           failed: 0
         },
-        recentFeatureRequests: []
+        recentFeatureRequests: [],
+        features: []
       };
 
       mockApiService.getDashboardData.mockResolvedValue(mockDashboardData);
@@ -506,8 +511,9 @@ describe('Critical User Journeys', () => {
         .mockResolvedValueOnce({
           systemMetrics: { latest: null, averageLast24Hours: null, recentHistory: [] },
           featureRequestStats: { total: 0, pending: 0, processing: 0, completed: 0, failed: 0 },
-          recentFeatureRequests: []
-        });
+          recentFeatureRequests: [],
+        features: []
+      });
 
       mockApiService.getWorkflows.mockResolvedValue([]);
 
@@ -558,8 +564,9 @@ describe('Critical User Journeys', () => {
         new Promise(resolve => setTimeout(() => resolve({
           systemMetrics: { latest: null, averageLast24Hours: null, recentHistory: [] },
           featureRequestStats: { total: 0, pending: 0, processing: 0, completed: 0, failed: 0 },
-          recentFeatureRequests: []
-        }), 100))
+          recentFeatureRequests: [],
+        features: []
+      }), 100))
       );
       mockApiService.getWorkflows.mockResolvedValue([]);
 
@@ -581,7 +588,8 @@ describe('Critical User Journeys', () => {
       mockApiService.getDashboardData.mockResolvedValue({
         systemMetrics: { latest: null, averageLast24Hours: null, recentHistory: [] },
         featureRequestStats: { total: 0, pending: 0, processing: 0, completed: 0, failed: 0 },
-        recentFeatureRequests: []
+        recentFeatureRequests: [],
+        features: []
       });
       mockApiService.getWorkflows.mockResolvedValue([]);
       mockApiService.getFeatureRequests.mockResolvedValue([]);

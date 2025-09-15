@@ -1,4 +1,4 @@
-import { BaseHook, HookContext, HookResult } from './index';
+import { BaseHook, HookContext, HookResult } from './base';
 import { WorkflowService } from '../services/WorkflowService';
 import { WorkflowScheduler } from '../scheduler/WorkflowScheduler';
 /**

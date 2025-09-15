@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AutomateWorkflowHook = void 0;
-const index_1 = require("./index");
+const base_1 = require("./base");
 const WebSocketService_1 = require("../services/WebSocketService");
 /**
  * Hook that processes natural language workflow descriptions
  * and generates workflow specifications and backend code
  */
-class AutomateWorkflowHook extends index_1.BaseHook {
+class AutomateWorkflowHook extends base_1.BaseHook {
     constructor(workflowService, scheduler) {
         super();
         this.workflowService = workflowService;

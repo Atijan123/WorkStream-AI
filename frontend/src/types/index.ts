@@ -30,6 +30,16 @@ export interface SystemMetrics {
   timestamp: Date;
 }
 
+export interface GeneratedFeature {
+  id: string;
+  name: string;
+  componentName: string;
+  filePath: string;
+  description: string;
+  status: 'active' | 'inactive' | 'error';
+  createdAt: Date;
+}
+
 export interface DashboardData {
   recentFeatureRequests: FeatureRequest[];
   featureRequestStats: {
@@ -44,6 +54,7 @@ export interface DashboardData {
     averageLast24Hours: { cpu_usage: number; memory_usage: number } | null;
     recentHistory: SystemMetrics[];
   };
+  features: GeneratedFeature[];
 }
 
 export interface WorkflowStatus {

@@ -34,7 +34,10 @@ export declare class ComponentGenerator {
     private generateTestProps;
     private generateTestAssertions;
     private updateAppComponent;
+    private findMatchingClosingTag;
     private generateDefaultProps;
+    private generateSampleChartData;
+    private generateSampleTableData;
     private toPascalCase;
     private inferPropType;
 }

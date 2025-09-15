@@ -28,7 +28,8 @@ export class HookRegistry {
     const evolveUIHook = new EvolveUIHook(
       specManager,
       componentGenerator,
-      this.featureRequestRepo
+      this.featureRequestRepo,
+      true // Enable fast mode for quick processing
     );
     
     this.registerHook(evolveUIHook);

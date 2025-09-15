@@ -1,0 +1,67 @@
+app_name: Self-Evolving Workflow Automator
+description: >-
+  A dashboard application that can dynamically evolve its own UI features and
+  automate workflows
+tech_stack:
+  frontend: React with TypeScript
+  backend: Node.js with Express
+  database: SQLite
+  styles: Tailwind CSS
+features:
+  dashboard: Main dashboard with system overview
+  feature_requests: Natural language feature request system
+  workflow_builder: Visual workflow creation interface
+  real_time_updates: WebSocket-based real-time updates
+  sales-performance-chart-chart_chart: >-
+    A chart component that i want a sales performance chart showing monthly
+    revenue.
+  user-management-table-table_table: >-
+    A table component that create a user management table with sorting
+    functionality.
+  contact-form-customer-form_form: A form component that add a contact form for customer inquiries.
+  notification-counter-button-button_button: A button component that build a notification counter button.
+  weather-widget-showing-widget_widget: >-
+    A widget component that i want a weather widget showing current temperature
+    and conditions.
+  dark-mode-toggle-widget_widget: >-
+    A widget component that add a dark mode toggle at the top of the dashboard
+    page.
+  notes-widget-dashboard-widget_widget: >-
+    A widget component that add a notes widget to the dashboard where i can type
+    and save short notes.
+  small-monthly-calendar-widget_widget: >-
+    A widget component that add a small monthly calendar widget on the
+    dashboard.
+  calendar-top-dashboard-widget_widget: A widget component that add a calendar at the top of the dashboard page.
+  calendar-component-successfully-widget_widget: >-
+    A widget component that calendar component successfully generated and added
+    to the top of the dashboard page. the component includes full month view,
+    date navigation, today highlighting, and compact/expanded modes..
+  simple-counter-widget-button_button: >-
+    A button component that i want a simple counter widget that shows a number
+    and increment button.
+  counter-widget-increment-button_button: >-
+    A button component that create a counter widget with increment and decrement
+    buttons.
+workflows:
+  - id: daily-sales-report
+    name: Daily Sales Report
+    description: Generate and send daily sales reports
+    trigger:
+      type: schedule
+      schedule: 0 8 * * *
+    actions:
+      - type: generate_report
+        report_type: sales
+      - type: send_email
+        recipients:
+          - admin@example.com
+  - id: system-health-check
+    name: Hourly System Health Check
+    description: Monitor system health and alert on issues
+    trigger:
+      type: schedule
+      schedule: 0 * * * *
+    actions:
+      - type: check_system_health
+      - type: alert_if_issues

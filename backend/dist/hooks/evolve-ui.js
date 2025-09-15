@@ -1,18 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EvolveUIHook = void 0;
-const index_1 = require("./index");
+const base_1 = require("./base");
+const FastComponentGenerator_1 = require("../services/FastComponentGenerator");
 const WebSocketService_1 = require("../services/WebSocketService");
 /**
  * Hook that processes natural language UI feature requests
  * and generates React components dynamically
  */
-class EvolveUIHook extends index_1.BaseHook {
-    constructor(specManager, componentGenerator, featureRequestRepo) {
+class EvolveUIHook extends base_1.BaseHook {
+    constructor(specManager, componentGenerator, featureRequestRepo, fastMode = true) {
         super();
         this.specManager = specManager;
         this.componentGenerator = componentGenerator;
         this.featureRequestRepo = featureRequestRepo;
+        this.fastMode = fastMode;
         this.name = 'evolve_ui';
         this.description = 'Processes natural language UI feature requests and generates React components';
     }
@@ -43,8 +45,9 @@ class EvolveUIHook extends index_1.BaseHook {
             const parsedRequest = await this.parseFeatureRequest(context.request);
             // Update the spec with new feature
             const specUpdates = await this.specManager.addFeature(parsedRequest);
-            // Generate React components
-            const generatedComponents = await this.componentGenerator.generateComponents(parsedRequest);
+            // Generate React components (use fast generator for speed)
+            const generator = this.fastMode ? new FastComponentGenerator_1.FastComponentGenerator() : this.componentGenerator;
+            const generatedComponents = await generator.generateComponents(parsedRequest);
             // Update feature request status
             await this.featureRequestRepo.update(createdRequest.id, {
                 status: 'completed',
@@ -92,33 +95,33 @@ class EvolveUIHook extends index_1.BaseHook {
         }
     }
     async parseFeatureRequest(request) {
-        // Simple natural language parsing logic
-        // In a real implementation, this would use more sophisticated NLP
         const lowercaseRequest = request.toLowerCase();
         let componentType = 'widget';
         let name = 'custom-feature';
         let description = request;
-        // Detect component type from keywords
-        if (lowercaseRequest.includes('chart') || lowercaseRequest.includes('graph')) {
+        // Enhanced component type detection
+        if (lowercaseRequest.includes('chart') || lowercaseRequest.includes('graph') ||
+            lowercaseRequest.includes('visualization') || lowercaseRequest.includes('plot')) {
             componentType = 'chart';
-            name = 'custom-chart';
+            name = this.generateComponentName(request, 'chart');
         }
-        else if (lowercaseRequest.includes('table') || lowercaseRequest.includes('list')) {
+        else if (lowercaseRequest.includes('table') || lowercaseRequest.includes('list') ||
+            lowercaseRequest.includes('data') || lowercaseRequest.includes('rows')) {
             componentType = 'table';
-            name = 'custom-table';
+            name = this.generateComponentName(request, 'table');
         }
-        else if (lowercaseRequest.includes('form') || lowercaseRequest.includes('input')) {
+        else if (lowercaseRequest.includes('form') || lowercaseRequest.includes('input') ||
+            lowercaseRequest.includes('submit') || lowercaseRequest.includes('field')) {
             componentType = 'form';
-            name = 'custom-form';
+            name = this.generateComponentName(request, 'form');
         }
-        else if (lowercaseRequest.includes('button') || lowercaseRequest.includes('action')) {
+        else if (lowercaseRequest.includes('button') || lowercaseRequest.includes('action') ||
+            lowercaseRequest.includes('click')) {
             componentType = 'button';
-            name = 'custom-button';
+            name = this.generateComponentName(request, 'button');
         }
-        // Extract name if mentioned
-        const nameMatch = request.match(/(?:create|add|build)\s+(?:a\s+)?(.+?)(?:\s+(?:component|widget|feature))?$/i);
-        if (nameMatch) {
-            name = nameMatch[1].toLowerCase().replace(/\s+/g, '-');
+        else {
+            name = this.generateComponentName(request, 'widget');
         }
         return {
             name,
@@ -127,6 +130,20 @@ class EvolveUIHook extends index_1.BaseHook {
             props: this.extractProps(request),
             styling: this.extractStyling(request)
         };
+    }
+    generateComponentName(request, type) {
+        // Extract meaningful words from the request
+        const words = request.toLowerCase()
+            .replace(/[^\w\s]/g, ' ')
+            .split(/\s+/)
+            .filter(word => word.length > 2 &&
+            !['the', 'and', 'for', 'with', 'that', 'this', 'want', 'need', 'create', 'add', 'build', 'make'].includes(word));
+        // Take the first few meaningful words
+        const nameWords = words.slice(0, 3);
+        if (nameWords.length > 0) {
+            return nameWords.join('-') + '-' + type;
+        }
+        return `custom-${type}-${Date.now()}`;
     }
     extractProps(request) {
         const props = {};

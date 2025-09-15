@@ -1,56 +1,66 @@
 app_name: Self-Evolving Workflow Automator
-description: >
-  A dashboard that can evolve its own UI features and automate workflows
-  based on natural-language requests. Integrates a universal workflow
-  automator with a self-evolving spec-to-code pipeline powered by Kiro.
-
+description: A dashboard application that can dynamically evolve its own UI features and automate workflows
 tech_stack:
-  frontend: react
-  backend: node
-  database: sqlite
-  styles: tailwindcss
-
+  frontend: React with TypeScript
+  backend: Node.js with Express
+  database: SQLite
+  styles: Tailwind CSS
 features:
-  - feature_request_box: >
-      A text box where users submit natural-language requests for new UI
-      features. Requests trigger the `evolve_ui` hook to update the spec
-      and regenerate UI components.
-  - workflow_builder: >
-      A natural-language workflow request interface that triggers the
-      `automate_workflow` hook to append structured workflows to the spec
-      and generate backend automation code.
-  - dashboard_home: >
-      Central view showing widgets, active workflows, and logs of recent
-      self-evolution changes.
-
+  dashboard: Main dashboard with system overview
+  feature_requests: Natural language feature request system
+  workflow_builder: Visual workflow creation interface
+  real_time_updates: WebSocket-based real-time updates
+  feature_1757638404620-lqro6jwnq:
+    name: add_a_weather_widget_to_the_dashboard
+    description: Add a weather widget to the dashboard
+    status: completed
+    created_at: '2025-09-12T00:53:24.620Z'
+    type: user_requested
+    completed_at: '2025-09-12T00:53:26.218Z'
+  feature_1757638464821-1n3va7021:
+    name: create_a_user_profile_card_with_avatar_name_and_st
+    description: Create a user profile card with avatar, name, and status indicator
+    status: completed
+    created_at: '2025-09-12T00:54:24.822Z'
+    type: user_requested
+    completed_at: '2025-09-12T00:54:26.309Z'
+  feature_1757638467778-8nfk4xxjo:
+    name: i_need_a_realtime_analytics_dashboard_with_charts_
+    description: I need a real-time analytics dashboard with charts and metrics
+    status: completed
+    created_at: '2025-09-12T00:54:27.778Z'
+    type: user_requested
+    completed_at: '2025-09-12T00:54:29.161Z'
 workflows:
-  - id: daily_sales_report
-    name: "Daily Sales Report Email"
-    description: >
-      Sends a daily sales report email to the sales@company.com mailbox
-      at 8 AM every day.
+  - id: daily-sales-report
+    name: Daily Sales Report
+    description: Generate and send daily sales reports
     trigger:
-      type: cron
-      schedule: "0 8 * * *"
+      type: schedule
+      schedule: 0 8 * * *
     actions:
-      - type: fetch_data
-        source: sales_db
-        query: "SELECT * FROM sales WHERE date = CURRENT_DATE"
       - type: generate_report
-        format: pdf
+        report_type: sales
       - type: send_email
-        to: sales@company.com
-        subject: "Daily Sales Report"
-        attachment: report.pdf
-
-  - id: hourly_system_health
-    name: "Hourly System Health Check"
-    description: >
-      Checks system CPU and memory usage every hour and logs results.
+        recipients:
+          - admin@example.com
+  - id: system-health-check
+    name: Hourly System Health Check
+    description: Monitor system health and alert on issues
     trigger:
-      type: cron
-      schedule: "0 * * * *"
+      type: schedule
+      schedule: 0 * * * *
     actions:
-      - type: check_system_metrics
-      - type: log_result
-        destination: system_health_log
+      - type: check_system_health
+      - type: alert_if_issues
+  - id: workflow_1757638466347-qg5w8n5hv
+    name: Weekly Backup
+    description: Automated weekly database backup
+    created_at: '2025-09-12T00:54:26.347Z'
+    status: active
+    trigger:
+      type: schedule
+      schedule: 0 2 * * 0
+    actions:
+      - type: custom
+        action: backup_database

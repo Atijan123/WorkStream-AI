@@ -37,3 +37,13 @@ export interface SystemMetrics {
   memory_usage: number;
   timestamp: Date;
 }
+
+export interface GeneratedFeature {
+  id: string;
+  name: string;
+  componentName: string;
+  filePath: string;
+  description: string;
+  status: 'active' | 'inactive' | 'error';
+  createdAt: Date;
+}

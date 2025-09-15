@@ -58,6 +58,7 @@ describe('DashboardHome', () => {
         },
       ],
     },
+    features: [],
   };
 
   const mockWorkflows: Workflow[] = [
@@ -249,6 +250,7 @@ describe('DashboardHome', () => {
         averageLast24Hours: null,
         recentHistory: [],
       },
+      features: [],
     };
 
     mockApiService.getDashboardData.mockResolvedValue(emptyDashboardData);

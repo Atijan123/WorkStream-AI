@@ -1,6 +1,7 @@
 import { BaseHook, HookContext, HookResult } from './base';
 import { SpecManager } from '../services/SpecManager';
 import { ComponentGenerator } from '../services/ComponentGenerator';
+import { FastComponentGenerator } from '../services/FastComponentGenerator';
 import { FeatureRequestRepository } from '../repositories/FeatureRequestRepository';
 import { WebSocketService } from '../services/WebSocketService';
 
@@ -15,7 +16,8 @@ export class EvolveUIHook extends BaseHook {
   constructor(
     private specManager: SpecManager,
     private componentGenerator: ComponentGenerator,
-    private featureRequestRepo: FeatureRequestRepository
+    private featureRequestRepo: FeatureRequestRepository,
+    private fastMode: boolean = true
   ) {
     super();
   }
@@ -52,8 +54,9 @@ export class EvolveUIHook extends BaseHook {
       // Update the spec with new feature
       const specUpdates = await this.specManager.addFeature(parsedRequest);
       
-      // Generate React components
-      const generatedComponents = await this.componentGenerator.generateComponents(parsedRequest);
+      // Generate React components (use fast generator for speed)
+      const generator = this.fastMode ? new FastComponentGenerator() : this.componentGenerator;
+      const generatedComponents = await generator.generateComponents(parsedRequest);
       
       // Update feature request status
       await this.featureRequestRepo.update(createdRequest.id, {
@@ -106,33 +109,31 @@ export class EvolveUIHook extends BaseHook {
   }
 
   private async parseFeatureRequest(request: string): Promise<ParsedFeatureRequest> {
-    // Simple natural language parsing logic
-    // In a real implementation, this would use more sophisticated NLP
     const lowercaseRequest = request.toLowerCase();
     
     let componentType = 'widget';
     let name = 'custom-feature';
     let description = request;
     
-    // Detect component type from keywords
-    if (lowercaseRequest.includes('chart') || lowercaseRequest.includes('graph')) {
+    // Enhanced component type detection
+    if (lowercaseRequest.includes('chart') || lowercaseRequest.includes('graph') || 
+        lowercaseRequest.includes('visualization') || lowercaseRequest.includes('plot')) {
       componentType = 'chart';
-      name = 'custom-chart';
-    } else if (lowercaseRequest.includes('table') || lowercaseRequest.includes('list')) {
+      name = this.generateComponentName(request, 'chart');
+    } else if (lowercaseRequest.includes('table') || lowercaseRequest.includes('list') || 
+               lowercaseRequest.includes('data') || lowercaseRequest.includes('rows')) {
       componentType = 'table';
-      name = 'custom-table';
-    } else if (lowercaseRequest.includes('form') || lowercaseRequest.includes('input')) {
+      name = this.generateComponentName(request, 'table');
+    } else if (lowercaseRequest.includes('form') || lowercaseRequest.includes('input') || 
+               lowercaseRequest.includes('submit') || lowercaseRequest.includes('field')) {
       componentType = 'form';
-      name = 'custom-form';
-    } else if (lowercaseRequest.includes('button') || lowercaseRequest.includes('action')) {
+      name = this.generateComponentName(request, 'form');
+    } else if (lowercaseRequest.includes('button') || lowercaseRequest.includes('action') || 
+               lowercaseRequest.includes('click')) {
       componentType = 'button';
-      name = 'custom-button';
-    }
-
-    // Extract name if mentioned
-    const nameMatch = request.match(/(?:create|add|build)\s+(?:a\s+)?(.+?)(?:\s+(?:component|widget|feature))?$/i);
-    if (nameMatch) {
-      name = nameMatch[1].toLowerCase().replace(/\s+/g, '-');
+      name = this.generateComponentName(request, 'button');
+    } else {
+      name = this.generateComponentName(request, 'widget');
     }
 
     return {
@@ -142,6 +143,24 @@ export class EvolveUIHook extends BaseHook {
       props: this.extractProps(request),
       styling: this.extractStyling(request)
     };
+  }
+
+  private generateComponentName(request: string, type: string): string {
+    // Extract meaningful words from the request
+    const words = request.toLowerCase()
+      .replace(/[^\w\s]/g, ' ')
+      .split(/\s+/)
+      .filter(word => word.length > 2 && 
+        !['the', 'and', 'for', 'with', 'that', 'this', 'want', 'need', 'create', 'add', 'build', 'make'].includes(word));
+    
+    // Take the first few meaningful words
+    const nameWords = words.slice(0, 3);
+    
+    if (nameWords.length > 0) {
+      return nameWords.join('-') + '-' + type;
+    }
+    
+    return `custom-${type}-${Date.now()}`;
   }
 
   private extractProps(request: string): Record<string, any> {

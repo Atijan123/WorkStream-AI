@@ -91,12 +91,15 @@ const FeatureRequest: React.FC<FeatureRequestProps> = ({
       if (onSubmitRequest) {
         await onSubmitRequest(description.trim());
       } else {
-        // Use the evolve_ui hook to process the feature request
-        const result = await apiService.evolveUI(description.trim());
-        if (result.success) {
-          showSuccess('Feature Request Submitted', `${result.message}${result.generatedFiles ? ` Generated files: ${result.generatedFiles.join(', ')}` : ''}`);
+        // Submit feature request - it will automatically trigger evolve_ui hook
+        const result = await apiService.submitFeatureRequest(description.trim());
+        
+        if (result.processing?.success) {
+          showSuccess('Feature Request Processed', `${result.processing.message}${result.processing.generatedFiles ? ` Generated files: ${result.processing.generatedFiles.join(', ')}` : ''}`);
+        } else if (result.processing?.success === false) {
+          showError('Processing Failed', result.processing.message || 'Failed to process feature request automatically');
         } else {
-          throw new Error(result.message || 'Failed to process feature request');
+          showSuccess('Feature Request Submitted', 'Your request has been submitted and will be processed shortly.');
         }
       }
       
